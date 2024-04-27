@@ -40,7 +40,7 @@ services:
   djdesweb:
     restart: unless-stopped
     build: ./djdesweb
-    command: python manage.py runserver 0.0.0.0:8000
+    command: gunicorn djdesweb.wsgi:application --bind 0.0.0.0:8000
     volumes:
       - ./djdesweb:/usr/src/app
     ports:
