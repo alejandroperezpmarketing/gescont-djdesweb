@@ -19,17 +19,10 @@ def appLogin(request):
     time.sleep(seconds)
 
     #get the form data
-    
-    #username=request.POST.get("username",None)
-    #password=request.POST.get("password",None)
-
-    
-
-    if not username:
-        d=json.loads(request.body.decode())
-        username=d["username"]
-        password=d["password"]
-        print(username,password)
+    d=general.getPostFormData(request)
+    username=d["username"]
+    password=d["password"]
+    print(username,password)
     
 
     #If user is not None, the credentials where correct

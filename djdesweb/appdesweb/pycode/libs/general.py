@@ -1,4 +1,4 @@
-
+import json
 from django.contrib.auth.models import User
 
 def getUserGroups(user: User):
@@ -18,4 +18,12 @@ def getUserGroups_fromUsername(username):
     """
     user=User.objects.get(username=username)
     return getUserGroups(user)
+
+def getPostFormData(request):
+    l=list(request.POST.values())
+    if len(l)==0:
+        return json.loads(request.body.decode())
+    else:
+        return request.POST
+
 
