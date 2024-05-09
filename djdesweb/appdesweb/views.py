@@ -4,6 +4,8 @@ from django.http import JsonResponse
 #from django.http import HttpResponse
 from django.views import View
 
+from django.contrib.auth.mixins import LoginRequiredMixin
+
 from .pycode import buildingsPOO, connPOO
 #from django.contrib.auth import logout
 #from django.contrib.auth.mixins import PermissionRequiredMixin,LoginRequiredMixin
@@ -46,7 +48,7 @@ class BuildingSelectByArea(View):
         r=b.selectAsDictByArea(area=area)
         return JsonResponse(r)
     
-class BuildingInsert(View):
+class BuildingInsert(LoginRequiredMixin, View):
     def post(self, request):
         descripcion=request.POST['descripcion']
         geomWkt=request.POST['geomWkt']

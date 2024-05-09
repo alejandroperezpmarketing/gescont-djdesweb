@@ -4,9 +4,13 @@ Created on 21 mar. 2024
 @author: vagrant
 '''
 from django.urls import path
-from appdesweb import views
+from appdesweb import views, viewsUsers
 
 urlpatterns = [
+    path('not_logged_in/',viewsUsers.notLoggedIn),
+    path('app_login/',viewsUsers.AppLogin.as_view()),
+    path('app_logout/',viewsUsers.AppLogout.as_view()),
+    
     path('hello_world/',views.HelloWord.as_view()),
     path('hola_clase/',views.HolaClase.as_view()),
     path('building_select_by_gid/',views.BuildingSelectByGid.as_view()),
