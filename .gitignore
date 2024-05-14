@@ -1,3 +1,4 @@
 .env.prod
 pgadmin4
 pgadmin4_prod
+.venv
