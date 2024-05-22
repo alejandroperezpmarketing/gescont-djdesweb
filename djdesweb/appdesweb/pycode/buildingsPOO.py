@@ -194,5 +194,5 @@ class Stores():
         #self.conn.cursor.execute(q,[d['client_type'],d['sex'],d['name'],d['last_name'],d['age'],d['purchase_date'],d['client_motivation'],d['channel_id'],d['geomWkt'])
         self.conn.conn.commit()
         gid = self.conn.cursor.fetchall()[0][0]
-        return {'ok':True,'message':f'Cliente insertado. gid: {gid}','data':[[gid]]}
+        return {'ok':True,'message':f'Tienda insertada. gid: {gid}','data':[[gid]]}
      

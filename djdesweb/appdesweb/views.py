@@ -6,7 +6,8 @@ from django.views import View
 
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .pycode import buildingsPOO, connPOO
-
+from .pycode.libs import general
+# in the terminal for development google-chrome --disable-web-security --user-data-dir="[/home/vagrant/chrome]"
 #from django.contrib.auth import logout
 #from django.contrib.auth.mixins import PermissionRequiredMixin,LoginRequiredMixin
 #from django.views.decorators.csrf import csrf_exempt
@@ -137,11 +138,6 @@ class InsertClient(LoginRequiredMixin, View):
 ################# Stores
 class InsertStore(LoginRequiredMixin, View):
     def post(self, request):
-        """ client_segment_id=request.POST['client_segment_id']
-        store_name=request.POST['store_name']
-        store_description=request.POST['store_description']
-        geomWkt=request.POST['geomWkt'] """
-
         #get the form data
         d=general.getPostFormData(request)
         client_segment_id=d['client_segment_id']
