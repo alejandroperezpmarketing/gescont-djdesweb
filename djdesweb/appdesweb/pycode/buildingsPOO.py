@@ -136,7 +136,7 @@ class Clients():
     def __init__(self,conn:Conn):
         self.conn=conn
 
-    def insert_client(self,name,last_name,age,sex,geomWkt)->int:
+    def insert_client(self,name,last_name,age,sex,geomWkt):
         """
         d is a dictionary
         client_type,sex, name,last_name,age,purchase_date,client_motivation,channel_id, geomWkt
