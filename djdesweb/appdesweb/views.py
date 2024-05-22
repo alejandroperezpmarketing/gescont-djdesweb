@@ -110,8 +110,9 @@ class Building(View):
 
 ###Alejandro Functions
 
+######Clients#################"
 
-class ClientInsert(LoginRequiredMixin, View):
+class InsertClient(LoginRequiredMixin, View):
     def post(self, request):
 
 
@@ -132,6 +133,27 @@ class ClientInsert(LoginRequiredMixin, View):
         r=b.insert_client(name,last_name,age,sex,purchase_date,client_motivation,channel_id,geomWkt)
         return JsonResponse(r)
 
+
+################# Stores
+class InsertStore(LoginRequiredMixin, View):
+    def post(self, request):
+        """ client_segment_id=request.POST['client_segment_id']
+        store_name=request.POST['store_name']
+        store_description=request.POST['store_description']
+        geomWkt=request.POST['geomWkt'] """
+
+        #get the form data
+        d=general.getPostFormData(request)
+        client_segment_id=d['client_segment_id']
+        store_name = d['store_name']
+        store_description = d['store_description']
+        geomWkt=d['geomWkt']
+
+        print(client_segment_id,geomWkt)
+        conn=connPOO.Conn()
+        b=buildingsPOO.Stores(conn)
+        r=b.insert_store(client_segment_id,store_name,store_description,geomWkt)
+        return JsonResponse(r)
 
         # ....
 

@@ -170,8 +170,27 @@ class Clients():
         
         #function
         q =f"insert into d.clients (client_type,sex,name,last_name,age,purchase_date,client_motivation,channel_id,geom) values (%s,%s,%s,%s,%s,%s,%s,%s,st_geometryfromtext(%s,25830)) returning gid"
-        self.conn.cursor.execute(q,[d['client_type'],d['sex'],d['name'],d['last_name'],d['age'],d['purchase_date'],d['client_motivation'],d['channel_id'],d['geomWkt']])
-        self.conn.cursor.execute(q,[d['client_type'],d['sex'],d['name'],d['last_name'],d['age'],d['purchase_date'],d['client_motivation'],d['channel_id'],d['geomWkt']])
+        self.conn.cursor.execute(q,[client_type,sex,name,last_name,age,purchase_date,client_motivation,channel_id,geomWkt])
+        #self.conn.cursor.execute(q,[d['client_type'],d['sex'],d['name'],d['last_name'],d['age'],d['purchase_date'],d['client_motivation'],d['channel_id'],d['geomWkt'])
+        self.conn.conn.commit()
+        gid = self.conn.cursor.fetchall()[0][0]
+        return {'ok':True,'message':f'Cliente insertado. gid: {gid}','data':[[gid]]}
+
+
+class Stores():
+
+
+    conn:Conn
+    def __init__(self,conn:Conn):
+        self.conn=conn
+
+    def insert_store(self,client_segment_id,store_name,store_description,geomWkt)->int:
+        """
+        d is a dictionary
+        client_type,sex, name,last_name,age,purchase_date,client_motivation,channel_id, geomWkt
+        """
+        q =f"insert into d.stores (client_segment_id,store_name,store_description,geom) values (%s,%s,%s,st_geometryfromtext(%s,25830)) returning gid"
+        self.conn.cursor.execute(q,[client_segment_id,store_name,store_description,geomWkt])
         #self.conn.cursor.execute(q,[d['client_type'],d['sex'],d['name'],d['last_name'],d['age'],d['purchase_date'],d['client_motivation'],d['channel_id'],d['geomWkt'])
         self.conn.conn.commit()
         gid = self.conn.cursor.fetchall()[0][0]

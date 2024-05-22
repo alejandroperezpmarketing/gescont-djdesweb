@@ -254,7 +254,21 @@ class Stores():
     dog_store_service store_service_products_domain,
     dog_store_product store_service_products_domain,
     cow_store_product store_service_products_domain,
-    cow_store_service store_service_products_domain,
+    cow_store_service store_s
+
+class Stores():
+    
+    ################
+    CREATE DOMAIN store_service_products_domain as varchar;
+    CREATE TABLE d.stores (
+    gid  serial PRIMARY KEY, 
+    client_segment_id integer NOT NULL,
+    store_id integer NOT NULL, 
+    store_name varchar, 
+    star_store_service store_service_products_domain,
+    star_store_product store_service_products_domain,
+    dog_store_service store_service_products_domain,
+    dog_store_product store_service_products_domain,
     question_store_service store_service_products_domain,
     question_store_product store_service_products_domain,
     store_owner_name varchar,
@@ -267,6 +281,7 @@ class Stores():
 
 d['gid'],d['client_segment_id'],d['store_id'],d['store_name'],d['star_store_service'],d['star_store_product'],d['dog_store_service'],d['dog_store_product'],d['cow_store_product'],d['cow_store_service'],d['question_store_product'],['question_store_product'],d['question_store_service'],d['store_owner_name'],d['store_owner_last_name'],d['store_Description'],d['connection_channel_id'],d['geomWkt']
     """
+    class Stores():
     conn:Conn
     def __init__(self,conn:Conn):
         self.conn=conn
