@@ -123,19 +123,20 @@ class InsertClient(LoginRequiredMixin, View):
         last_name=d['last_name']
         age=d['age']
         sex=d['sex']
-        purchase_date=d['purchase_date']
-        client_motivation=d['client_motivation']
-        channel_id=d['channel_id']
+        #purchase_date=d['purchase_date']
+        #client_motivation=d['client_motivation']
+        #channel_id=d['channel_id']
         geomWkt=d['geomWkt']
-        print(name,last_name,age,sex,purchase_date,client_motivation,channel_id,geomWkt)
+        print(name,last_name,age,sex,geomWkt)
 
         conn=connPOO.Conn()
         b=buildingsPOO.Clients(conn)
-        r=b.insert_client(name,last_name,age,sex,purchase_date,client_motivation,channel_id,geomWkt)
+        r=b.insert_client(name,last_name,age,sex,geomWkt)
         return JsonResponse(r)
 
 
 ################# Stores
+
 class InsertStore(LoginRequiredMixin, View):
     def post(self, request):
         #get the form data
@@ -150,6 +151,7 @@ class InsertStore(LoginRequiredMixin, View):
         b=buildingsPOO.Stores(conn)
         r=b.insert_store(client_segment_id,store_name,store_description,geomWkt)
         return JsonResponse(r)
+
 
         # ....
 
