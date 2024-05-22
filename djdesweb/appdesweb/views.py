@@ -5,8 +5,8 @@ from django.http import JsonResponse
 from django.views import View
 
 from django.contrib.auth.mixins import LoginRequiredMixin
-
 from .pycode import buildingsPOO, connPOO
+
 #from django.contrib.auth import logout
 #from django.contrib.auth.mixins import PermissionRequiredMixin,LoginRequiredMixin
 #from django.views.decorators.csrf import csrf_exempt
@@ -106,3 +106,44 @@ class Building(View):
 #        return JsonResponse({'message':'soy el método get'})
 
 
+####################################################################################
+
+###Alejandro Functions
+
+
+class ClientInsert(LoginRequiredMixin, View):
+    def post(self, request):
+
+
+        #get the form data
+        d=general.getPostFormData(request)
+        name=d['name']
+        last_name=d['last_name']
+        age=d['age']
+        sex=d['sex']
+        purchase_date=d['purchase_date']
+        client_motivation=d['client_motivation']
+        channel_id=d['channel_id']
+        geomWkt=d['geomWkt']
+        print(name,last_name,age,sex,purchase_date,client_motivation,channel_id,geomWkt)
+
+        conn=connPOO.Conn()
+        b=buildingsPOO.Clients(conn)
+        r=b.insert_client(name,last_name,age,sex,purchase_date,client_motivation,channel_id,geomWkt)
+        return JsonResponse(r)
+
+
+        # ....
+
+        # last_name=request.POST['last_name']
+        # age=request.POST['age']
+        # sex=request.POST['sex']
+        # purchase_date=request.POST['purchase_date']
+        # client_motivation=request.POST['client_motivation']
+        # channel_id=request.POST['channel_id']
+        # geomWkt=request.POST['geomWkt']
+        # print(name,last_name,age,sex,purchase_date,client_motivation,channel_id,geomWkt)
+        # conn=connPOO.Conn()
+        # b=buildingsPOO.Clients(conn)
+        # r=b.insert_client(name,last_name,age,sex, purchase_date,client_motivation,channel_id,geomWkt)
+        # return JsonResponse(r)

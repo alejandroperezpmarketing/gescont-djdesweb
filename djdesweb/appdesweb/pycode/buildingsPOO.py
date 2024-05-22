@@ -122,3 +122,58 @@ class Buildings():
             n=len(r)
             return {'ok':True,'message':f'Edificios seleccionados: {n}','data':r}
 
+
+
+####################################################
+
+
+
+
+
+class Clients():
+    """
+    ################
+    
+    create table d.clients (
+    gid  serial PRIMARY KEY, 
+    client_type varchar,
+    sex varchar, 
+    name varchar, 
+    last_name varchar, 
+    age integer DEFAULT 0,   
+    purchase_date date,
+    client_motivation varchar,
+    channel_id integer,
+    geom geometry (POINT,25830));
+    
+    
+    
+    campos : 
+    client_type (física o jurídica), 
+    name ( si es juridica el nombre de la empresa si es  fisica el nombre de la persona
+    sex (double precision valor por defecto 'NA'
+    age (integrer valor por defecto (NA)
+    purchase_date (date)
+    client_motivation ( descripcion de que busca  el cliente con nuestro servicio o producto)
+    channel_id
+    """
+    
+    conn:Conn
+    def __init__(self,conn:Conn):
+        self.conn=conn
+
+    def insert_client(self,name,last_name,age,sex,purchase_date,client_motivation,channel_id,geomWkt)->int:
+        """
+        d is a dictionary
+        client_type,sex, name,last_name,age,purchase_date,client_motivation,channel_id, geomWkt
+        """
+        
+        #function
+        q =f"insert into d.clients (client_type,sex,name,last_name,age,purchase_date,client_motivation,channel_id,geom) values (%s,%s,%s,%s,%s,%s,%s,%s,st_geometryfromtext(%s,25830)) returning gid"
+        self.conn.cursor.execute(q,[d['client_type'],d['sex'],d['name'],d['last_name'],d['age'],d['purchase_date'],d['client_motivation'],d['channel_id'],d['geomWkt']])
+        self.conn.cursor.execute(q,[d['client_type'],d['sex'],d['name'],d['last_name'],d['age'],d['purchase_date'],d['client_motivation'],d['channel_id'],d['geomWkt']])
+        #self.conn.cursor.execute(q,[d['client_type'],d['sex'],d['name'],d['last_name'],d['age'],d['purchase_date'],d['client_motivation'],d['channel_id'],d['geomWkt'])
+        self.conn.conn.commit()
+        gid = self.conn.cursor.fetchall()[0][0]
+        return {'ok':True,'message':f'Cliente insertado. gid: {gid}','data':[[gid]]}
+     

@@ -20,6 +20,7 @@ urlpatterns = [
     path('building_update/',views.BuildingUpdate.as_view()),
     path('building_delete/',views.BuildingDelete.as_view()),
     path('building/',views.Building.as_view()),
+    path('client_insert/',views.ClientInsert.as_view()),
     path('h/',views.HelloWord.as_view()),
 
 ]

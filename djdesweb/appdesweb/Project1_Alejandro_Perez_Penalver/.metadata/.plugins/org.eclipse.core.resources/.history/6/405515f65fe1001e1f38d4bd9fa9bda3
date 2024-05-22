@@ -1,0 +1,50 @@
+'''
+Created on 13 mar. 2024
+
+@author: vagrant
+'''
+from connPOO import Conn
+import buildingsPOO
+
+conn=Conn()
+'''
+###############################"
+1. POINTS
+###############################"
+'''
+clients=buildingsPOO.Clients(conn)
+
+"""
+1.1 INSERT POINT - CLIENT'S DATA
+
+insert_client_data=clients.insert_client(client_type='person',sex='woman',name='test client',last_name='test client',age='21',purchase_date='1995-10-23',client_motivation='this is a test',channel_id='1',geomWkt='POINT(725500 4296800)')
+gid=insert_client_data['data'][0][0]
+print(gid)
+"""
+
+"""
+1.2 DELET POINT - CLIENT'S DATA
+"""
+
+
+
+
+
+
+"""
+###############################
+2. POLYGONS
+###############################
+
+"""
+
+
+
+
+
+
+"""
+###############################
+3. LINES
+###############################
+"""

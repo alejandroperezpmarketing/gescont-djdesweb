@@ -1,0 +1,122 @@
+'''
+Created on 13 mar. 2024
+
+@author: vagrant
+'''
+from connPOO import Conn
+import buildingsPOO
+import json
+
+conn=Conn()
+'''
+###############################"
+1. POINTS
+###############################"
+'''
+clients=buildingsPOO.Clients(conn)
+
+"""
+1.1 INSERT POINT - CLIENT'S DATA
+
+d = {
+gid:,
+client_type:'person',
+sex:'woman',
+name:'test client',
+last_name:'test client',
+age:'21',
+purchase_date:'1995-10-23',
+client_motivation:'this is a test',
+channel_id:'1',
+geomWkt:'POINT(725500 4296800)
+
+}
+#insert_client_data=clients.insert_client(client_type='person',sex='woman',name='test client',last_name='test client',age='21',purchase_date='1995-10-23',client_motivation='this is a test',channel_id='1',geomWkt='POINT(725500 4296800)')
+
+d = {
+    'gid':4,
+    'client_type':'company',
+    'sex':'',
+    'name':'test client',
+    'last_name':'test client',
+    'age':'21',
+    'purchase_date':'1995-10-23',
+    'client_motivation':'updated with a dictionary',
+    'channel_id':'1',
+    'geomWkt':'POINT(725500 4296800)'
+    }
+"""
+"""
+insert_client_data=clients.insert_client(d)
+gid=insert_client_data['data'][0][0]
+print(gid)
+"""
+
+
+"""
+1.2 DELET POINT - CLIENT'S DATA
+
+delete_client_data = clients.delete_client(3)
+print(f'Filas borradas {delete_client_data}')
+"""
+
+"""
+1.3 UPDATE POINT - CLIENT'S DATA
+
+update_client_data = clients.update_client(d)
+print(f'Filas actualizadas: {update_client_data}')
+"""
+
+"""
+1.4 SELECT POINT - CLIENT'S DATA
+
+select_client_data = clients.select_client()
+#select_client_data = clients.selectAsDict_client(gid=4)
+result = {'Filas seleccionadas':select_client_data}
+print(result)
+#print(json.dumps(result, indent=4))
+"""
+
+
+"""
+###############################
+2. POLYGONS - buildings
+###############################
+
+"""
+
+
+
+
+
+
+"""
+###############################
+3. LINES - streets
+###############################
+"""
+streets=buildingsPOO.Streets(conn)
+
+"""
+1.1 INSERT LINESTRING - STREET'S DATA
+"""
+
+d = {
+    'gid':1,
+    'zone_id':'company',
+    'street_type':'',
+    'street_name':'test client',
+    'postal_code':'test client',
+    'municipality':'21',
+    'provice':'valencia',
+    'region':'valencia',
+    'country':'spain',
+    'hierarchy':1,
+    'ONEWAY':'T',
+    'geomWkt':'LINESTRING(-0.3714148661851554 39.45873998256314508, -0.37131826567050574 39.45877833729205975, -0.37044298159677463 39.45914590614246009, -0.37036235769022197 39.45918462154414641)'
+    }
+
+insert_street_data=streets.insert_streets(d)
+gid=insert_street_data['data'][0][0]
+print(gid)
+

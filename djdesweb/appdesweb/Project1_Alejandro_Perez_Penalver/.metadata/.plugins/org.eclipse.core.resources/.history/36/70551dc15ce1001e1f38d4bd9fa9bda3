@@ -1,0 +1,11 @@
+'''
+Created on 13 mar. 2024
+
+@author: vagrant
+'''
+from connPOO import Conn
+import buildingsPOO
+
+conn=Conn()
+clients=buildingsPOO.Clients(conn)
+r=clients.insert_client(client_type='person',sex='men',name='test client',last_name='test client',age='20',purchase_date=DATE '23/10/1995',client_motivation='this is a test',channel_id='1',geomWkt='POINT((0 0)')
