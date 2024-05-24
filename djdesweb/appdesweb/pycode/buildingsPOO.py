@@ -124,6 +124,24 @@ class Buildings():
 
 
 
+
+
+    def select_stores(self, gid)->list:
+        
+        if gid is None:
+            print('ERROR: The gid has not been selected')
+        else:
+            q="""
+            SELECT client_segment_id,store_name,store_description,geomWkt FROM d.stores where gid = %s)
+            """
+        self.conn.cursor.execute(q,[gid])
+        l = self.conn.cursor.fetchall()
+        r=l[0][0]
+        if r is None:
+            return {'ok':True,'message':f'Stores locations selected: 0','data':[]}
+        else:
+            n=len(r)
+            return {'ok':True,'message':f'Stores locations selected: {n}','data':r}
 ####################################################
 
 
@@ -169,3 +187,49 @@ class Stores():
         self.conn.conn.commit()
         gid = self.conn.cursor.fetchall()[0][0]
         return {'ok':True,'message':f'Tienda insertada. gid: {gid}','data':[[gid]]}
+    
+    def delete_stores(self, gid:int)->int:
+        """
+        Deletes a store location point based in the gid
+        """
+        q="delete from d.stores where gid = %s"
+        self.conn.cursor.execute(q,[gid])
+        n= self.conn.cursor.rowcount
+        self.conn.conn.commit()
+        if n == 0:
+            return {'ok':False,'message':f'Cero  ubicaciones','data':[[0]]}
+        elif n==1:
+            return {'ok':True,'message':f'Ubicacion borrada. Filas afectadas: {n}','data':[[n]]}
+        elif n > 1:
+            return {'ok':False,'message':f'Demasiadas ubicaciones borradas. Filas afectadas: {n}','data':[[n]]}
+
+    def select_stores(self, gid)->list:
+        if gid is None:
+            q="select * from d.stores where gid = %s"
+        else:
+            q="select client_segment_id,store_name,store_description,st_astext(geom) from d.stores where gid = %s"
+
+        self.conn.cursor.execute(q,[gid])
+        l = self.conn.cursor.fetchall()
+        n=len(l)
+        return {'ok':True,'message':f'Edificios seleccionados: {n}','data':l}
+    
+
+
+
+
+class Streets():
+    
+    conn:Conn
+    def __init__(self,conn:Conn):
+        self.conn=conn
+
+    def insert_streets(self,street_name,municipality,postal_code,geomWkt):
+        q =f"insert into d.streets (street_name,municipality,postal_code,geom) values (%s,%s,%s,st_geometryfromtext(%s,25830)) returning gid"
+        self.conn.cursor.execute(q,[street_name,municipality,postal_code,geomWkt])
+        #self.conn.cursor.execute(q,[d['client_type'],d['sex'],d['name'],d['last_name'],d['age'],d['purchase_date'],d['client_motivation'],d['channel_id'],d['geomWkt'])
+        self.conn.conn.commit()
+        gid = self.conn.cursor.fetchall()[0][0]
+        return {'ok':True,'message':f'Calle insertada. gid: {gid}','data':[[gid]]}
+     
+     

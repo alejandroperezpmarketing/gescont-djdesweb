@@ -153,6 +153,26 @@ class InsertStore(LoginRequiredMixin, View):
         return JsonResponse(r)
 
 
+
+class SelectStoreByGid(View):
+    def get(self, request):
+        gid=request.GET['gid']
+        conn=connPOO.Conn()
+        b=buildingsPOO.Stores(conn)
+        r=b.select_stores(gid=gid)
+        return JsonResponse(r)
+
+
+class DeleteStoreByGid(View):
+    def post(self, request):
+        gid=request.POST['gid']
+        print(gid)
+        conn=connPOO.Conn()
+        b=buildingsPOO.Stores(conn)
+        r=b.delete_stores(gid)
+        return JsonResponse(r)
+    
+
         # ....
 
         # last_name=request.POST['last_name']
@@ -167,3 +187,22 @@ class InsertStore(LoginRequiredMixin, View):
         # b=buildingsPOO.Clients(conn)
         # r=b.insert_client(name,last_name,age,sex, purchase_date,client_motivation,channel_id,geomWkt)
         # return JsonResponse(r)
+
+################# Streets
+
+class InsertStreets(LoginRequiredMixin, View):
+    def post(self, request,gid):
+        #get the form data
+        d=general.getPostFormData(request)
+        street_name=d['street_name']
+        municipality = d['municipality']
+        postal_code = d['postal_code']
+        geomWkt=d['geomWkt']
+
+        print(street_name,municipality,postal_code,geomWkt)
+        conn=connPOO.Conn()
+        b=buildingsPOO.Streets(conn)
+        r=b.insert_streets(street_name,municipality,postal_code,geomWkt)
+        return JsonResponse(r)
+
+

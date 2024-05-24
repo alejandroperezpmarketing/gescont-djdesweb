@@ -22,6 +22,12 @@ urlpatterns = [
     path('building/',views.Building.as_view()),
     path('inser_client/',views.InsertClient.as_view()),
     path('insert_store/',views.InsertStore.as_view()),
+    path('select_store_by_gid/',views.SelectStoreByGid.as_view()),
+    path('delete_store_by_gid/',views.DeleteStoreByGid.as_view()),
+
+    path('insert_streets/',views.InsertStreets.as_view()),
+
+
     path('h/',views.HelloWord.as_view()),
 
 ]
