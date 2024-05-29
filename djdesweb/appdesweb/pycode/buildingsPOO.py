@@ -169,6 +169,24 @@ class Clients():
         return {'ok':True,'message':f'Cliente insertado. gid: {gid}','data':[[gid]]}
 
 
+
+    
+    def delete_client_by_gid(self, gid:int)->int:
+        """
+        Deletes a client location point based in the gid
+        """
+        q="delete from d.clients where gid = %s"
+        self.conn.cursor.execute(q,[gid])
+        n= self.conn.cursor.rowcount
+        self.conn.conn.commit()
+        if n == 0:
+            return {'ok':False,'message':f'Error: Ningun cliente borrada','data':[[0]]}
+        elif n==1:
+            return {'ok':True,'message':f'Cliete borrado. Filas afectadas: {n}','data':[[n]]}
+        elif n > 1:
+            return {'ok':False,'message':f'Demasiados clientes borradas. Filas afectadas: {n}','data':[[n]]}
+
+
 class Stores():
 
 
@@ -188,7 +206,20 @@ class Stores():
         gid = self.conn.cursor.fetchall()[0][0]
         return {'ok':True,'message':f'Tienda insertada. gid: {gid}','data':[[gid]]}
     
-    def delete_stores(self, gid:int)->int:
+    
+    def update_store(self,gid,client_segment_id,store_name,store_description,geomWkt)->int:
+        q ="update d.stores set (client_segment_id,store_name,store_description,geom) = (%s,%s,%s,st_geometryfromtext(%s,25830)) where gid = %s"
+        self.conn.cursor.execute(q,[client_segment_id,store_name,store_description,geomWkt,gid])
+        self.conn.conn.commit()
+        n = self.conn.cursor.rowcount
+        if n == 0:
+            return {'ok':False,'message':f'Ninguna tienda actualizada','data':[[0]]}
+        elif n==1:
+            return {'ok':True,'message':f'ubicaciones actualizadas. Filas afectadas: {n}','data':[[n]]}
+        elif n > 1:
+            return {'ok':False,'message':f'Demasiados tiendas actualizados. Filas afectadas: {n}','data':[[n]]}
+        
+    def delete_store_by_gid(self, gid:int)->int:
         """
         Deletes a store location point based in the gid
         """
@@ -204,7 +235,7 @@ class Stores():
             return {'ok':False,'message':f'Demasiadas ubicaciones borradas. Filas afectadas: {n}','data':[[n]]}
 
     def select_stores(self, gid)->list:
-        if gid is None:
+        """ if gid is None:
             q="select * from d.stores where gid = %s"
         else:
             q="select client_segment_id,store_name,store_description,st_astext(geom) from d.stores where gid = %s"
@@ -213,6 +244,27 @@ class Stores():
         l = self.conn.cursor.fetchall()
         n=len(l)
         return {'ok':True,'message':f'Edificios seleccionados: {n}','data':l}
+
+
+              """       
+
+        q="""
+        SELECT array_to_json(array_agg(registros)) FROM (
+            select gid,client_segment_id,store_name,store_description,st_astext(geom), st_asgeojson(geom) 
+            from d.stores where gid = %s
+         ) as registros
+        """
+        self.conn.cursor.execute(q,[gid])
+        l = self.conn.cursor.fetchall()
+        r=l[0][0]
+        if r is None:
+            return {'ok':True,'message':f'Tiendas seleccionados: 0','data':[]}
+        else:
+            n=len(r)
+            return {'ok':True,'message':f'Tiendas seleccionados: {n}','data':r}
+
+
+    
     
 
 
@@ -233,3 +285,18 @@ class Streets():
         return {'ok':True,'message':f'Calle insertada. gid: {gid}','data':[[gid]]}
      
      
+    
+    def delete_street_by_gid(self, gid:int)->int:
+        """
+        Deletes a store location point based in the gid
+        """
+        q="delete from d.stores where gid = %s"
+        self.conn.cursor.execute(q,[gid])
+        n= self.conn.cursor.rowcount
+        self.conn.conn.commit()
+        if n == 0:
+            return {'ok':False,'message':f'Error: Ninguna calle borrada','data':[[0]]}
+        elif n==1:
+            return {'ok':True,'message':f'Calle borrada. Filas afectadas: {n}','data':[[n]]}
+        elif n > 1:
+            return {'ok':False,'message':f'Demasiadas calles borradas. Filas afectadas: {n}','data':[[n]]}

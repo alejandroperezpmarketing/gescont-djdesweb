@@ -135,6 +135,20 @@ class InsertClient(LoginRequiredMixin, View):
         return JsonResponse(r)
 
 
+class DeleteClientByGid(LoginRequiredMixin, View):
+    def post(self, request):
+        d=general.getPostFormData(request)
+        gid=d['gid']
+        conn=connPOO.Conn()
+        b=buildingsPOO.Clients(conn)
+        r=b.delete_client_by_gid(gid=gid)
+        return JsonResponse(r)
+
+
+
+
+
+
 ################# Stores
 
 class InsertStore(LoginRequiredMixin, View):
@@ -153,6 +167,20 @@ class InsertStore(LoginRequiredMixin, View):
         return JsonResponse(r)
 
 
+class UpdateStoreInformation(LoginRequiredMixin, View):
+    def post(self, request):
+        #get the form data
+        d=general.getPostFormData(request)
+        gid=d['gid']
+        client_segment_id=d['client_segment_id']
+        store_name = d['store_name']
+        store_description = d['store_description']
+        geomWkt=d['geomWkt']
+        print(gid,store_name,store_description,client_segment_id,geomWkt)
+        conn=connPOO.Conn()
+        b=buildingsPOO.Stores(conn)
+        r=b.update_store(gid,client_segment_id,store_name,store_description,geomWkt)
+        return JsonResponse(r)
 
 class SelectStoreByGid(View):
     def get(self, request):
@@ -163,13 +191,15 @@ class SelectStoreByGid(View):
         return JsonResponse(r)
 
 
-class DeleteStoreByGid(View):
+class DeleteStoreByGid(LoginRequiredMixin, View):
     def post(self, request):
-        gid=request.POST['gid']
+        #gid=request.POST['gid']
+        d=general.getPostFormData(request)
+        gid=d['gid']
         print(gid)
         conn=connPOO.Conn()
         b=buildingsPOO.Stores(conn)
-        r=b.delete_stores(gid)
+        r=b.delete_store_by_gid(gid=gid)
         return JsonResponse(r)
     
 
@@ -206,3 +236,15 @@ class InsertStreets(LoginRequiredMixin, View):
         return JsonResponse(r)
 
 
+
+class DeleteStreetByGid(LoginRequiredMixin, View):
+    def post(self, request):
+        #gid=request.POST['gid']
+        d=general.getPostFormData(request)
+        gid=d['gid']
+        print(gid)
+        conn=connPOO.Conn()
+        b=buildingsPOO.Streets(conn)
+        r=b.delete_street_by_gid(gid=gid)
+        return JsonResponse(r)
+    
