@@ -1,6 +1,7 @@
 services:
   postgis:
     image: postgis/postgis:16-3.4
+    container_name: desweb_postgis_1
     restart: "no"
     env_file:
       - .env
@@ -22,6 +23,7 @@ services:
 
   pgadmin4:
     image: dpage/pgadmin4:8.3
+    container_name: desweb_pgadmin4_1
     env_file:
       - .env
       - .env.dev
@@ -39,6 +41,7 @@ services:
 
   djdesweb:
     restart: "no"
+    container_name: desweb_djangoapi_1
     build: ./djdesweb
     command: python manage.py runserver 0.0.0.0:8000
     volumes:
