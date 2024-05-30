@@ -145,6 +145,13 @@ class DeleteClientByGid(LoginRequiredMixin, View):
         return JsonResponse(r)
 
 
+class SelectClienByGid(View):
+    def get(self, request):
+        gid=request.GET['gid']
+        conn=connPOO.Conn()
+        b=buildingsPOO.Clients(conn)
+        r=b.select_client_by_gid(gid=gid)
+        return JsonResponse(r)
 
 
 

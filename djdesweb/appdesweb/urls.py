@@ -31,6 +31,8 @@ urlpatterns = [
     #Clients
     path('delete_client_by_gid/',views.DeleteClientByGid.as_view()),
     path('inser_client/',views.InsertClient.as_view()),
+    path('select_client_by_gid/',views.InsertClient.as_view()),
+
     path('h/',views.HelloWord.as_view()),
 
 ]
