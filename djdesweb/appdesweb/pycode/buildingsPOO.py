@@ -187,6 +187,43 @@ class Clients():
             return {'ok':False,'message':f'Demasiados clientes borradas. Filas afectadas: {n}','data':[[n]]}
 
 
+    def select_client_by_gid(self, gid):
+        
+        if gid is None:
+            print('The gid has not been selected')
+            q="""
+            SELECT array_to_json(array_agg(registros)) FROM (
+            select gid,sex,name,last_name,age,st_astext(geom) from d.clients where gid = %s) as registros
+            """
+        else:
+            q="""
+            SELECT array_to_json(array_agg(registros)) FROM (
+            select gid,sex,name,last_name,age,st_astext(geom) 
+            from d.clients where gid = %s) as registros
+            """
+        self.conn.cursor.execute(q,[gid])
+        l = self.conn.cursor.fetchall()
+        r=l[0][0]
+        if r is None:
+            return {'ok':True,'message':f'Clients locations selected: 0','data':[]}
+        else:
+            n=len(r)
+            return {'ok':True,'message':f'Clients locations selected: {n}','data':r}
+
+
+    def update_client(self,gid,name,last_name,age,sex,geomWkt)->int:
+        q ="update d.clients set (name,last_name,age,sex,geom) = (%s,%s,%s,%s,st_geometryfromtext(%s,25830)) where gid = %s"
+        self.conn.cursor.execute(q,[name,last_name,age,sex,geomWkt,gid])
+        self.conn.conn.commit()
+        n = self.conn.cursor.rowcount
+        if n == 0:
+            return {'ok':False,'message':f'Ningun cliente actualizada','data':[[0]]}
+        elif n==1:
+            return {'ok':True,'message':f'Cliente actualizado. Filas afectadas: {n}','data':[[n]]}
+        elif n > 1:
+            return {'ok':False,'message':f'Demasiados clientes actualizados. Filas afectadas: {n}','data':[[n]]}
+        
+
 class Stores():
 
 
@@ -300,3 +337,5 @@ class Streets():
             return {'ok':True,'message':f'Calle borrada. Filas afectadas: {n}','data':[[n]]}
         elif n > 1:
             return {'ok':False,'message':f'Demasiadas calles borradas. Filas afectadas: {n}','data':[[n]]}
+
+
