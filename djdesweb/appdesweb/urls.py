@@ -24,14 +24,18 @@ urlpatterns = [
     path('insert_store/',views.InsertStore.as_view()),
     path('select_store_by_gid/',views.SelectStoreByGid.as_view()),
     path('delete_store_by_gid/',views.DeleteStoreByGid.as_view()),
-    path('update_store/',views.UpdateStoreInformation.as_view()),
+    path('update_store/',views.UpdateStoreData.as_view()),
     #Streets
     path('insert_streets/',views.InsertStreets.as_view()),
     path('delete_street_by_gid/',views.DeleteStreetByGid.as_view()),
+    #path('select_street_by_gid/',views.SelectStreetByGid.as_view()),
+    #path('update_street/',views.UpdateStreetData.as_view()),
+
     #Clients
     path('delete_client_by_gid/',views.DeleteClientByGid.as_view()),
     path('inser_client/',views.InsertClient.as_view()),
-    path('select_client_by_gid/',views.InsertClient.as_view()),
+    path('select_client_by_gid/',views.SelectClienByGid.as_view()),
+    path('update_client/',views.UpdateclientData.as_view()),
 
     path('h/',views.HelloWord.as_view()),
 

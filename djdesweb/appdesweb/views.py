@@ -152,8 +152,22 @@ class SelectClienByGid(View):
         b=buildingsPOO.Clients(conn)
         r=b.select_client_by_gid(gid=gid)
         return JsonResponse(r)
-
-
+    
+class UpdateclientData(LoginRequiredMixin, View):
+    def post(self, request):
+        #get the form data
+        d=general.getPostFormData(request)
+        gid=d['gid']
+        name=d['name']
+        last_name = d['last_name']
+        age = d['age']
+        sex = d['sex']
+        geomWkt=d['geomWkt']
+        print(gid,name,last_name,age,sex,geomWkt)
+        conn=connPOO.Conn()
+        b=buildingsPOO.Clients(conn)
+        r=b.update_client(gid,name,last_name,age,sex,geomWkt)
+        return JsonResponse(r)
 
 
 ################# Stores
@@ -174,7 +188,7 @@ class InsertStore(LoginRequiredMixin, View):
         return JsonResponse(r)
 
 
-class UpdateStoreInformation(LoginRequiredMixin, View):
+class UpdateStoreData(LoginRequiredMixin, View):
     def post(self, request):
         #get the form data
         d=general.getPostFormData(request)
