@@ -19,7 +19,7 @@ services:
         timeout: 5s
         retries: 5
     networks:
-      - postgis
+      - desweb_postgis
 
   pgadmin4:
     image: dpage/pgadmin4:8.3
@@ -34,7 +34,7 @@ services:
       - ${DEVELOP_PGADMIN4_FORWARDED_PORT}:80
     restart: "no"
     networks:
-      - postgis
+      - desweb_postgis
     depends_on:
       postgis:
         condition: service_healthy
@@ -52,7 +52,7 @@ services:
       - .env
       - .env.dev
     networks:
-      - postgis
+      - desweb_postgis
 
     #to ckeck if postgres is already ready. This service
     #will not start up to the posgis service is ready
@@ -60,7 +60,7 @@ services:
       postgis:
         condition: service_healthy
 networks:
-   postgis:
+   desweb_postgis:
       driver: bridge
 #coment
 volumes:
