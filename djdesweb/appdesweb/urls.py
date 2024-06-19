@@ -28,8 +28,8 @@ urlpatterns = [
     #Streets
     path('insert_streets/',views.InsertStreets.as_view()),
     path('delete_street_by_gid/',views.DeleteStreetByGid.as_view()),
-    #path('select_street_by_gid/',views.SelectStreetByGid.as_view()),
-    #path('update_street/',views.UpdateStreetData.as_view()),
+    path('select_street_by_gid/',views.SelectStreetByGid.as_view()),
+    path('update_street/',views.UpdateStreetData.as_view()),
 
     #Clients
     path('delete_client_by_gid/',views.DeleteClientByGid.as_view()),

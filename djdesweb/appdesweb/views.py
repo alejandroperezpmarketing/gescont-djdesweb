@@ -242,7 +242,7 @@ class DeleteStoreByGid(LoginRequiredMixin, View):
 ################# Streets
 
 class InsertStreets(LoginRequiredMixin, View):
-    def post(self, request,gid):
+    def post(self, request):
         #get the form data
         d=general.getPostFormData(request)
         street_name=d['street_name']
@@ -269,3 +269,28 @@ class DeleteStreetByGid(LoginRequiredMixin, View):
         r=b.delete_street_by_gid(gid=gid)
         return JsonResponse(r)
     
+
+class SelectStreetByGid(View):
+    def get(self, request):
+        gid=request.GET['gid']
+        conn=connPOO.Conn()
+        b=buildingsPOO.Streets(conn)
+        r=b.select_street_by_gid(gid=gid)
+        return JsonResponse(r)
+
+
+
+class UpdateStreetData(LoginRequiredMixin, View):
+    def post(self, request):
+        #get the form data
+        d=general.getPostFormData(request)
+        gid=d['gid']
+        street_name=d['street_name']
+        postal_code = d['postal_code']
+        municipality = d['municipality']
+        geomWkt=d['geomWkt']
+        print(gid,street_name,postal_code,municipality,geomWkt)
+        conn=connPOO.Conn()
+        b=buildingsPOO.Streets(conn)
+        r=b.update_street(gid,street_name,postal_code,municipality,geomWkt)
+        return JsonResponse(r)

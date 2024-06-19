@@ -325,9 +325,9 @@ class Streets():
     
     def delete_street_by_gid(self, gid:int)->int:
         """
-        Deletes a store location point based in the gid
+        Deletes a street location based in the gid
         """
-        q="delete from d.stores where gid = %s"
+        q="delete from d.streets where gid = %s"
         self.conn.cursor.execute(q,[gid])
         n= self.conn.cursor.rowcount
         self.conn.conn.commit()
@@ -339,3 +339,40 @@ class Streets():
             return {'ok':False,'message':f'Demasiadas calles borradas. Filas afectadas: {n}','data':[[n]]}
 
 
+    def select_street_by_gid(self, gid):
+        
+        if gid is None:
+            print('The gid has not been selected')
+            q="""
+            SELECT array_to_json(array_agg(registros)) FROM (
+            select gid,street_name,postal_code,municipality,st_astext(geom) from d.streets where gid = %s) as registros
+            """
+        else:
+            q="""
+            SELECT array_to_json(array_agg(registros)) FROM (
+            select gid,street_name,postal_code,municipality,st_astext(geom) 
+            from d.streets where gid = %s) as registros
+            """
+        self.conn.cursor.execute(q,[gid])
+        l = self.conn.cursor.fetchall()
+        r=l[0][0]
+        if r is None:
+            return {'ok':True,'message':f'Streets selected: 0','data':[]}
+        else:
+            n=len(r)
+            return {'ok':True,'message':f'Streets selected: {n}','data':r}
+
+
+
+    def update_street(self,gid,street_name,postal_code,municipality,geomWkt)->int:
+        q ="update d.streets set (street_name,postal_code,municipality,geom) = (%s,%s,%s,st_geometryfromtext(%s,25830)) where gid = %s"
+        self.conn.cursor.execute(q,[street_name,postal_code,municipality,geomWkt,gid])
+        self.conn.conn.commit()
+        n = self.conn.cursor.rowcount
+        if n == 0:
+            return {'ok':False,'message':f'Ninguna calle actualizada','data':[[0]]}
+        elif n==1:
+            return {'ok':True,'message':f'Calle actualizada. Filas afectadas: {n}','data':[[n]]}
+        elif n > 1:
+            return {'ok':False,'message':f'Demasiadas calles actualizadas. Filas afectadas: {n}','data':[[n]]}
+        
