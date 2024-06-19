@@ -1,5 +1,5 @@
 """
-WSGI config for djdesweb project.
+WSGI config for alejandro_perez_api project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 
@@ -11,6 +11,6 @@ import os
 
 from django.core.wsgi import get_wsgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'djdesweb.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'alejandro_perez_api.settings')
 
 application = get_wsgi_application()
