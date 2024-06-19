@@ -1,7 +1,0 @@
-'''
-Created on 13 mar. 2024
-
-@author: vagrant
-'''
-from connPOO import Conn
-import buildingsPOO
