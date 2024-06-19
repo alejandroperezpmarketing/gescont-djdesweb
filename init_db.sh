@@ -1,2 +1,2 @@
 #/bin/bash
-docker exec gescont-djdesweb_djdesweb_1 sh -c "./initdb.sh"
+docker exec alejandro_perez_api_djdesweb_1 sh -c "./initdb.sh"

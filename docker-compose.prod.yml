@@ -41,7 +41,7 @@ services:
     container_name: alejandro_perez_api_djdesweb_1
     restart: unless-stopped
     build: ./alejandro_perez_docker_code_djdesweb
-    command: gunicorn djdesweb.wsgi:application --bind 0.0.0.0:8000
+    command: gunicorn alejandro_perez_api.wsgi:application --bind 0.0.0.0:8000
     volumes:
       - ./alejandro_perez_docker_code_djdesweb:/usr/src/app
     ports:
