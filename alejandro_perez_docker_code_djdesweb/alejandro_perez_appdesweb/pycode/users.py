@@ -3,7 +3,7 @@ import random, time
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 
-from appdesweb.pycode.libs import general
+from alejandro_perez_appdesweb.pycode.libs import general
 
 def appLogin(request):
     #django puts im every request the object ’user’,

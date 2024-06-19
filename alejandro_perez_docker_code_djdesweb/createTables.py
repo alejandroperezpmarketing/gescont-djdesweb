@@ -1,5 +1,5 @@
 
-from appdesweb.pycode.connPOO import Conn
+from alejandro_perez_appdesweb.pycode.connPOO import Conn
 
 conn = Conn()
 print('Creando la tabla demo')

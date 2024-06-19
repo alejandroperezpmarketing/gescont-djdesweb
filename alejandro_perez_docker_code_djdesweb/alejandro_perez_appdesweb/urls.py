@@ -4,7 +4,7 @@ Created on 21 mar. 2024
 @author: vagrant
 '''
 from django.urls import path
-from appdesweb import views, viewsUsers
+from alejandro_perez_appdesweb import views, viewsUsers
 
 urlpatterns = [
     path('not_logged_in/',viewsUsers.notLoggedIn),

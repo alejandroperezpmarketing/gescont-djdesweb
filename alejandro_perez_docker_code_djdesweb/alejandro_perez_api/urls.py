@@ -20,6 +20,6 @@ from django.urls import include
 #from appdesweb import urls
 
 urlpatterns = [
-    path('appdesweb/', include('appdesweb.urls')),
+    path('alejandro_perez_api/', include('alejandro_perez_appdesweb.urls')),
     path('admin/', admin.site.urls),
 ]
